@@ -10,8 +10,8 @@
         <knownHosts>~/.ssh/known_hosts</knownHosts>
         <sftpFolder>/tmp/</sftpFolder>
     </sftp>
-    
-    
+
+
     <vocabulary name="HERIS">
         <field fieldName="herisid" jsonPath="$.['HERIS-ID']" identifier="true" />
         <field fieldName="objektid" jsonPath="$.['Alte Objekt-ID']" />

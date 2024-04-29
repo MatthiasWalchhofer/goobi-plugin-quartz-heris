@@ -6,6 +6,7 @@ import static org.junit.Assert.assertTrue;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -114,6 +115,26 @@ public class HerisQuartzPluginTest {
         plugin.setPassword(password);
 
         plugin.getLatestHerisFile();
+    }
+
+    @Test
+    public void testSftpUsageDeactivated() {
+
+        HerisQuartzPlugin plugin = new HerisQuartzPlugin();
+        plugin.parseConfiguration();
+        String username = System.getenv("SFTP_USERNAME");
+        String password = System.getenv("SFTP_PASSWORD");
+        plugin.setUseSFTP(false);
+        plugin.setHerisFolder(resourcesFolder);
+        plugin.setUsername(username);
+        plugin.setPassword(password);
+
+        Path expected = Paths.get(resourcesFolder, "sample_latest.json");
+        expected.toFile()
+                .setLastModified(Instant.now().toEpochMilli());
+
+        Path actual = plugin.getLatestHerisFile();
+        assertEquals(expected, actual);
     }
 
     @Test
